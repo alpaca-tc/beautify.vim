@@ -27,13 +27,17 @@ function! s:run(commands) "{{{
 endfunction"}}}
 
 " Commands
-function! beautify#dispatch_beautify() "{{{
-  if empty(&filetype)
+function! beautify#dispatch_beautify(...) "{{{
+  if len(a:000) == 0 && empty(&filetype)
     echomsg 'Error occurred: File type is empty!'
     return 0
   endif
 
-  let filetype = split(&filetype, '\.')[0]
+  if empty(a:000)
+    let filetype = split(&filetype, '\.')[0]
+  else
+    let filetype = a:000[1]
+  endif
 
   if exists('*beautify#' . filetype) && filetype =~ 'css\|html\|javascript' 
     call beautify#{filetype}()
