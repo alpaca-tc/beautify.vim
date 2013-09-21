@@ -1,5 +1,14 @@
 # README
 
+## v0.2
+
+*TODO*
+
+- Write document.
+- Separate each of beautifier to sources.
+- Import beautifier into repository.
+- Append ruby-beautifer source
+
 ## Beautify
 
 This little beautifier will reformat and reindent.
