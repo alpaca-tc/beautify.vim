@@ -32,11 +32,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 call beautify#variables#initialize()
-
-command! -nargs=0 Beautify call beautify#dispatch_beautify()
-command! -nargs=0 JsBeautify call beautify#dispatch_beautify('javascript')
-command! -nargs=0 CssBeautify call beautify#dispatch_beautify('css')
-command! -nargs=0 HtmlBeautify call beautify#dispatch_beautify('html')
+command! -complete=customlist,beautify#complete_options -nargs=? -range=% Beautify :call beautify#dispatch_beautify(<count>, <line1>, <line2>, <f-args>)
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
