@@ -4,7 +4,7 @@ function! beautify#beautifier#get_sources(...) "{{{
   endif
 
   if len(a:000) == 0
-    return s:sources
+    return copy(s:sources)
   else
     let regexp_for_filtering = '^\(' . join(a:000, '\|') . '\)$'
     return filter(copy(s:sources), 'v:val.name =~ regexp_for_filtering')
@@ -48,23 +48,24 @@ function! beautify#beautifier#get_context() "{{{
   endif
 endfunction"}}}
 
-function! s:default_context.get_tempfile(start, end) "{{{
-  " TODO contextのfile_nameに依存するようにする
-  let content = getline(0, line('$'))
+function! s:get_tempfile(start, end) "{{{
+  let content = getline(a:start - 1, line(a:end) + 1)
   let temp_file = tempname()
   call writefile(content, temp_file)
 
   return temp_file
 endfunction"}}}
 
+function! s:default_context.get_tempfile() "{{{
+  return self.is_range ? self.get_partial_tempfile() : self.get_fully_tempfile()
+endfunction"}}}
+
 function! s:default_context.get_fully_tempfile() "{{{
-  return self.get_tempfile(0, '$')
+  return s:get_tempfile(0, '$')
 endfunction"}}}
 
 function! s:default_context.get_partial_tempfile() "{{{
-  let start_line = get(self, 'line1', 0)
-  let end_line = get(self, 'line2', 0)
-  return self.get_tempfile(start_line, end_line)
+  return s:get_tempfile(self.startline, self.endline)
 endfunction"}}}
 
 function! s:build_context(options) "{{{

@@ -1,11 +1,8 @@
 let s:default_source = {
-      \ 'name' : 'js-beautify',
       \ 'hooks' : {},
       \ }
-
-" js-beautify
 function! s:default_source.beautify(context) "{{{
-  let temp_file = a:context.get_fully_tempfile()
+  let temp_file = a:context.get_tempfile()
   let commands = beautify#utils#to_array(self.bin)
 
   call extend(commands, ['--indent-size', &tabstop])
@@ -18,12 +15,15 @@ endfunction"}}}
 
 let s:js_source = copy(s:default_source)
 let s:js_source.bin = g:beautify#bin['javascript']
+let s:js_source.name = 'js-beautify'
 
 let s:css_source = copy(s:default_source)
 let s:css_source.bin = g:beautify#bin['css']
+let s:css_source.name = 'css-beautify'
 
 let s:html_source = copy(s:default_source)
 let s:html_source.bin = g:beautify#bin['html']
+let s:html_source.name = 'html-beautify'
 
 function! beautify#beautifier#npm_beautifier#define() "{{{
   if executable(g:beautify#bin['javascript']) && executable(g:beautify#bin['html']) && executable(g:beautify#bin['css'])
