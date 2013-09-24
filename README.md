@@ -38,7 +38,7 @@ NeoBundleLazy 'alpaca-tc/beautify.vim', {
       \   'mac': 'npm install -g js-beautify',
       \ },
       \ 'autoload' : {
-      \   'commands' : ['JsBeautify', 'Beautify', 'CssBeautify', 'HtmlBeautify']
+      \   'commands' : ['Beautify']
       \ }}
 ```
 
@@ -63,17 +63,18 @@ If you want to configure js-beautify settings, you can check out [here](https://
 
 ```
 " Default value
-let g:beautify#bin = {
+let g:beautify#beautifier#npm_beautifier#bin = {
         \ 'javascript' : 'js-beautify',
         \ 'css'        : 'css-beautify',
         \ 'html'       : 'html-beautify' }
 " 'vnew', 'tabnew' etc..
-let g:beautify#outputter = 'current_buffer'
+let g:beautify#default_outputter = 'current_buffer'
 ```
 
 ## License
 
 AUTHOR: alpaca-tc <alprhcp666@gmail.com>
+
 Last Modified: 2013-09-18
 
 > License: MIT license
