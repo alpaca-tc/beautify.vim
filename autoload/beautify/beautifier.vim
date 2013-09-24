@@ -11,6 +11,22 @@ function! beautify#beautifier#get_sources(...) "{{{
   endif
 endfunction"}}}
 
+function! beautify#beautifier#get_sources_by_filetype(filetype) "{{{
+  if empty(a:filetype)
+    throw 'Filetype is empty!'
+  endif
+
+  let sources = beautify#beautifier#get_sources()
+  return filter(sources, 'v:val.filetype == a:filetype')
+endfunction"}}}
+
+function! s:fill_default_value(source) "{{{
+  let source = a:source
+  let source.filetype = get(source, 'filetype', '')
+  let source.priority = get(source, 'priority', 100)
+  return source
+endfunction"}}}
+
 function! beautify#beautifier#define_sources() "{{{
   let beautifier = split(globpath(&runtimepath, 'autoload/beautify/beautifier/*.vim'), '\n')
   let source_file_names = map(beautifier, 'fnamemodify(v:val, ":t:r")')
@@ -22,7 +38,7 @@ function! beautify#beautifier#define_sources() "{{{
 
     for beautifier_source in source_list
       if !empty(beautifier_source)
-        call add(s:sources, beautifier_source)
+        call add(s:sources, s:fill_default_value(beautifier_source))
       endif
     endfor
   endfor
@@ -49,7 +65,7 @@ function! beautify#beautifier#get_context() "{{{
 endfunction"}}}
 
 function! s:get_tempfile(start, end) "{{{
-  let content = getline(a:start - 1, line(a:end) + 1)
+  let content = getline(a:start, a:end)
   let temp_file = tempname()
   call writefile(content, temp_file)
 
@@ -76,20 +92,6 @@ function! s:build_context(options) "{{{
   return context
 endfunction"}}}
 
-function! s:send_result_to_outputter(source, output_file) "{{{
-  if has_key(a:source, 'outputter')
-    if type(a:source.outputter) == type(function('tr'))
-      return a:source.outputter(a:output_file)
-    elseif type(a:source.outputter) == type('')
-      return beautify#outputter#dispatch(a:output_file, a:source.outputter)
-    else
-      echomsg string('Error occurred: Invalid outputter is selected.')
-    endif
-  else
-    return beautify#outputter#dispatch(a:output_file)
-  endif
-endfunction"}}}
-
 function! s:write_result_to_tempfile(output) "{{{
   if type(a:output) == type('')
     let parsed = split(a:output, '\n')
@@ -111,12 +113,13 @@ function! beautify#beautifier#run(name, ...) "{{{
   let context = s:build_context(options)
 
   if empty(source_list)
-    echomsg '['. a:name .'] Source is not exists!'
+    throw '['. a:name .'] Source is not exists!'
     return
   endif
 
   " FIXME 最終的には全ての配列を精査する
   let source = source_list[0]
+  let context.source = source
 
   let hooks = get(source, 'hooks', {})
 
@@ -125,11 +128,11 @@ function! beautify#beautifier#run(name, ...) "{{{
   endif
 
   let result = source.beautify(context)
-  let output_file = s:write_result_to_tempfile(result)
 
   if has_key(hooks, 'finalize')
     call hooks.on_init(context)
   endif
 
-  return s:send_result_to_outputter(source, output_file)
+  let output_file = s:write_result_to_tempfile(result)
+  return beautify#outputter#dispatch(context, output_file)
 endfunction"}}}

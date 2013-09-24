@@ -15,17 +15,21 @@ endfunction"}}}
 
 let s:js_source = copy(s:default_source)
 let s:js_source.bin = g:beautify#bin['javascript']
+let s:js_source.filetype = 'javascript'
 let s:js_source.name = 'js-beautify'
 
 let s:css_source = copy(s:default_source)
 let s:css_source.bin = g:beautify#bin['css']
+let s:css_source.filetype = 'css'
 let s:css_source.name = 'css-beautify'
 
 let s:html_source = copy(s:default_source)
 let s:html_source.bin = g:beautify#bin['html']
+let s:html_source.filetype = 'html'
 let s:html_source.name = 'html-beautify'
 
 function! beautify#beautifier#npm_beautifier#define() "{{{
+  " TODO 変数名を変更する
   if executable(g:beautify#bin['javascript']) && executable(g:beautify#bin['html']) && executable(g:beautify#bin['css'])
     return [s:js_source, s:css_source, s:html_source]
   else
