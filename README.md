@@ -4,10 +4,10 @@
 
 *TODO*
 
-- Write document.
-- Separate each of beautifier to sources.
-- Import beautifier into repository.
-- Append ruby-beautifer source
+- [ ] Write document.
+- [x] Separate each of beautifier to sources.
+- [ ] Import beautifier into repository.
+- [ ] Append ruby-beautifer source
 
 ## Beautify
 
