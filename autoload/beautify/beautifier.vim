@@ -24,17 +24,23 @@ function! s:fill_default_value(source) "{{{
   let source = a:source
   let source.filetype = get(source, 'filetype', '')
   let source.priority = get(source, 'priority', 100)
+  let source.disable_partial = get(source, 'disable_partial', 0)
+
   return source
 endfunction"}}}
 
 function! beautify#beautifier#define_sources() "{{{
+  if exists('s:defined_sources')
+    return 
+  endif
+  let s:defined_sources = 1
+
   let beautifier = split(globpath(&runtimepath, 'autoload/beautify/beautifier/*.vim'), '\n')
   let source_file_names = map(beautifier, 'fnamemodify(v:val, ":t:r")')
   let s:sources = []
 
   for source_name in source_file_names
-    let sources = beautify#beautifier#{source_name}#define()
-    let source_list = beautify#utils#to_array(sources)
+    let source_list = beautify#utils#to_array(beautify#beautifier#{source_name}#define())
 
     for beautifier_source in source_list
       if !empty(beautifier_source)
@@ -42,6 +48,13 @@ function! beautify#beautifier#define_sources() "{{{
       endif
     endfor
   endfor
+endfunction"}}}
+
+function! beautify#beautifier#update_sources() "{{{
+  if exists('s:defined_sources')
+    unlet s:defined_sources
+  endif
+  call beautify#beautifier#define_sources()
 endfunction"}}}
 
 function! beautify#beautifier#initialize() "{{{
@@ -120,6 +133,9 @@ function! beautify#beautifier#run(name, ...) "{{{
   " FIXME 最終的には全ての配列を精査する
   let source = source_list[0]
   let context.source = source
+  if source.disable_partial == 1
+    let context.is_range = 0
+  endif
 
   let hooks = get(source, 'hooks', {})
 

@@ -27,7 +27,7 @@ function! s:filter_sources(fargs) "{{{
 endfunction"}}}
 
 function! s:sort_sources(t1, t2) "{{{
-  return t1.priority < t2.priority
+  return a:t1.priority < a:t2.priority
 endfunction"}}}
 
 function! s:parse_options(args) "{{{
