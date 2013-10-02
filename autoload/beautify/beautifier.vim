@@ -1,7 +1,5 @@
 function! beautify#beautifier#get_sources(...) "{{{
-  if !exists('s:sources')
-    call beautify#beautifier#define_sources()
-  endif
+  call beautify#beautifier#define_sources()
 
   if len(a:000) == 0
     return copy(s:sources)
