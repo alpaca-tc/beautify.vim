@@ -29,7 +29,7 @@ endfunction"}}}
 
 function! beautify#beautifier#define_sources() "{{{
   if exists('s:defined_sources')
-    return 
+    return
   endif
   let s:defined_sources = 1
 
