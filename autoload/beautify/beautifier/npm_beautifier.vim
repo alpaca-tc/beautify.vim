@@ -1,8 +1,8 @@
-" Initialize variables 
+" Initialize variables
 " TODO Sourceの方に移動させる
 
-let g:beautify#beautifier#npm_beautifier#bin = 
-      \ get(g:, 'beautify#beautifier#npm_beautifier#bin', 
+let g:beautify#beautifier#npm_beautifier#bin =
+      \ get(g:, 'beautify#beautifier#npm_beautifier#bin',
       \ {
       \   'javascript' : 'js-beautify',
       \   'css'        : 'css-beautify',

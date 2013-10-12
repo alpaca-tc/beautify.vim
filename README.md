@@ -1,41 +1,30 @@
-# README
+# Beautify.vim
 
-## v0.2
+- This little beautifier will reformat and reindent.
+- This converter will convert text selected to other syntax.
 
-*TODO*
-
-- [ ] Write document.
-- [x] Separate each of beautifier to sources.
-- [ ] Import beautifier into repository.
-- [ ] Append ruby-beautifer source
-
-## Beautify
-
-This little beautifier will reformat and reindent.
-
-![DEMO](http://gifzo.net/MOoKNlUYIm.gif)
+![DEMO]( http://cl.ly/image/2M2H3l2P1U1S/xWkXI5NHLR.gif )
 
 ## Usage
 
+**Beautify.vim** is reformatter and converter.
 
-*`:Beautify`*
+### Reformatting
 
-Reformat current buffer automatically.
+This plug-in support js, json, css and html as reformatter. In the case of the buffer already set filetype, reformatter is selected automatically. Therefore, if you wanted result then, you have only to execute `:Beautify`.
 
-*`:JsBeautify`*
-*`:CssBeautify`*
-*`:HtmlBeautify`*
+### Converting
 
-Reformat current buffer with js-beautify, css-beautify or html-beautify.
+This plug-in support converting buffer to other syntax. If you want to convert buffer to haml from html, executing `:Beautify html2haml`.
 
-## Install
+## How to install
 
 *NeoBundle*
 
 ```
-NeoBundleLazy 'alpaca-tc/beautify.vim', { 
+NeoBundleLazy 'alpaca-tc/beautify.vim', {
       \ 'build' : {
-      \   'mac': 'npm install -g js-beautify',
+      \   'mac': 'npm install -g js-beautify && gem install html2haml --pre',
       \ },
       \ 'autoload' : {
       \   'commands' : ['Beautify']
@@ -50,32 +39,46 @@ Bundle 'alpaca-tc/beautify.vim'
 
 **Install js-beautify**
 
-`Beautify` depends on [npm](http://www.joyent.com/blog/installing-node-and-npm) and js-beautify.
-You have to install js-beautify.
+`Beautify` depends on [npm](http://www.joyent.com/blog/installing-node-and-npm), jq, [js-beautify](https://npmjs.org/package/js-beautify) and [html2haml](https://github.com/haml/html2haml).
+You need to install them.
 
-`npm install -g js-beautify`
+- `npm install -g js-beautify`
+- `npm install -g jq`
+- `gem install html2haml --pre`
 
 ## Configuration
 
 If you want to configure js-beautify settings, you can check out [here](https://github.com/einars/js-beautify)
 
-**Vim variables**
+**Vim configuration**
 
 ```
-" Default value
-let g:beautify#beautifier#npm_beautifier#bin = {
-        \ 'javascript' : 'js-beautify',
-        \ 'css'        : 'css-beautify',
-        \ 'html'       : 'html-beautify' }
+" let g:beautify#beautifier#npm_beautifier#bin = {
+"        \ 'javascript' : 'js-beautify',
+"        \ 'css'        : 'css-beautify',
+"        \ 'html'       : 'html-beautify' }
+
+" let g:beautify#beautifier#jq#bin = 'jq'
+
+" let g:beautify#beautifier#html2haml#bin = 'html2haml'
+
+" How to open result
 " 'vnew', 'tabnew' etc..
-let g:beautify#default_outputter = 'current_buffer'
+" let g:beautify#default_outputter = 'current_buffer'
+
+" If you want to use new hash syntax of ruby19, you set 1 to the following variable.
+" let g:beautify#beautifier#html2haml#ruby19_attributes = 0
 ```
+
+## Commands
+
+- `:Beautify [{beautifier-name}]`
 
 ## License
 
 AUTHOR: alpaca-tc <alprhcp666@gmail.com>
 
-Last Modified: 2013-09-18
+Last Modified: 2013-10-13
 
 > License: MIT license
 > Permission is hereby granted, free of charge, to any person obtaining
@@ -85,10 +88,10 @@ Last Modified: 2013-09-18
 > distribute, sublicense, and/or sell copies of the Software, and to
 > permit persons to whom the Software is furnished to do so, subject to
 > the following conditions:
-> 
+>
 > The above copyright notice and this permission notice shall be included
 > in all copies or substantial portions of the Software.
-> 
+>
 > THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
 > OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
 > MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
