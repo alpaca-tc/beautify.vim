@@ -1,11 +1,24 @@
+let s:source = {
+      \ 'hooks' : {},
+      \ 'option' : '',
+      \ }
+function! beautify#beautifier#html2haml#define() "{{{
+  if !exists('s:html2haml')
+    let s:html2haml = copy(s:source)
+    let s:html2haml.name = 'html2haml'
+
+    let s:erb2haml  = copy(s:source)
+    let s:erb2haml.name = 'erb2haml'
+    let s:erb2haml.option = '--erb'
+  endif
+
+  return [s:html2haml, s:erb2haml]
+endfunction"}}}
+
 let g:beautify#beautifier#html2haml#bin =
       \ get(g:, 'beautify#beautifier#html2haml#bin', 'html2haml')
 let g:beautify#beautifier#html2haml#ruby19_attributes =
       \ get(g:, 'beautify#beautifier#html2haml#ruby19_attributes', 0)
-
-if !executable(g:beautify#beautifier#html2haml#bin)
-  echomsg 'Please run "gem install html2haml"'
-endif
 
 function! s:system(commands) "{{{
   if g:beautify#beautifier#html2haml#ruby19_attributes
@@ -21,26 +34,18 @@ function! s:system(commands) "{{{
   return system(join(a:commands), ' ')
 endfunction"}}}
 
-let s:html2haml_source = {
-      \ 'name' : 'html2haml',
-      \ 'hooks' : {},
-      \ }
-function! s:html2haml_source.beautify(context) "{{{
+function! s:source.beautify(context) "{{{
   let temp_file = a:context.get_tempfile()
+  let option = self.option
 
-  return s:system([g:beautify#beautifier#html2haml#bin, temp_file])
+  return s:system([g:beautify#beautifier#html2haml#bin, option, temp_file])
 endfunction"}}}
 
-let s:erb2haml_source = {
-      \ 'name' : 'erb2haml',
-      \ 'hooks' : {},
-      \ }
-function! s:erb2haml_source.beautify(context) "{{{
-  let temp_file = a:context.get_tempfile()
-  return s:system([g:beautify#beautifier#html2haml#bin, '--erb', temp_file])
-endfunction"}}}
-
-function! beautify#beautifier#html2haml#define() "{{{
-  let source = [s:html2haml_source, s:erb2haml_source]
-  return executable(g:beautify#beautifier#html2haml#bin) ? source : {}
+function! s:source.available() "{{{
+  if executable(g:beautify#beautifier#html2haml#bin)
+    return 1
+  else
+    echomsg 'Please run "gem install html2haml"'
+    return 0
+  endif
 endfunction"}}}

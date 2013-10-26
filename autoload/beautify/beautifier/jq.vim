@@ -1,15 +1,13 @@
 let g:beautify#beautifier#jq#bin = get(g:, 'beautify#beautifier#jq#bin', 'jq')
-
-if !executable(g:beautify#beautifier#jq#bin)
-  echomsg 'Please run "npm install -g jq"'
-endif
-
 let s:source = {
       \ 'name' : 'jq',
       \ 'filetype' : 'json',
       \ 'disable_partial' : 1,
       \ 'hooks' : {},
       \ }
+function! beautify#beautifier#jq#define() "{{{
+  return s:source
+endfunction"}}}
 
 function! s:source.beautify(context) "{{{
   let temp_file = a:context.get_fully_tempfile()
@@ -18,6 +16,11 @@ function! s:source.beautify(context) "{{{
   return system(command)
 endfunction"}}}
 
-function! beautify#beautifier#jq#define()
-  return executable('jq') ? s:source : []
-endfunction
+function! s:source.available() "{{{
+  if executable(g:beautify#beautifier#jq#bin)
+    return 1
+  else
+    return 0
+    echomsg 'Please run "npm install -g jq"'
+  endif
+endfunction"}}}
