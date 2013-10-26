@@ -1,9 +1,10 @@
 # Beautify.vim
 
-- This little beautifier will reformat and reindent.
-- This converter will convert text selected to other syntax.
+- This little **beautifier** will reformat and reindent.
+- This **converter** will convert text selected to other syntax.
 
-![DEMO]( http://cl.ly/image/2M2H3l2P1U1S/xWkXI5NHLR.gif )
+![DEMO]( assets/01.gif )
+![DEMO]( assets/02.gif )
 
 ## Usage
 
@@ -11,11 +12,25 @@
 
 ### Reformatting
 
-This plug-in support js, json, css and html as reformatter. In the case of the buffer already set filetype, reformatter is selected automatically. Therefore, if you wanted result then, you have only to execute `:Beautify`.
+This plug-in support js, json, css and html as reformatter. In the case of the buffer already set filetype, reformatter is selected automatically. Therefore, if you want result then, you have only to execute `:Beautify`.
+
+- `html-beautify`
+- `css-beautify`
+- `js-beautify`
+- `jq`
 
 ### Converting
 
 This plug-in support converting buffer to other syntax. If you want to convert buffer to haml from html, executing `:Beautify html2haml`.
+
+- `html2haml`
+- `erb2haml`
+- `css2haml`
+- `js2coffee`
+- `css2scss`
+- `css2sass`
+- `scss2sass`
+- `sass2scss`
 
 ## How to install
 
@@ -23,11 +38,13 @@ This plug-in support converting buffer to other syntax. If you want to convert b
 
 ```
 NeoBundleLazy 'alpaca-tc/beautify.vim', {
-      \ 'build' : {
-      \   'mac': 'npm install -g js-beautify && gem install html2haml --pre',
-      \ },
       \ 'autoload' : {
-      \   'commands' : ['Beautify']
+      \   'commands' : [
+      \     {
+      \       'name' : 'Beautify',
+      \       'complete' : 'customlist,beautify#complete_options'
+      \     }
+      \ ]
       \ }}
 ```
 
@@ -45,6 +62,11 @@ You need to install them.
 - `npm install -g js-beautify`
 - `npm install -g jq`
 - `gem install html2haml --pre`
+- `gem install sass`
+
+**Check installing**
+
+`:call beautify#debug#check_available()`
 
 ## Configuration
 
@@ -57,10 +79,9 @@ If you want to configure js-beautify settings, you can check out [here](https://
 "        \ 'javascript' : 'js-beautify',
 "        \ 'css'        : 'css-beautify',
 "        \ 'html'       : 'html-beautify' }
-
 " let g:beautify#beautifier#jq#bin = 'jq'
-
 " let g:beautify#beautifier#html2haml#bin = 'html2haml'
+" let g:beautify#beautifier#sass_convert#bin = 'sass-convert'
 
 " How to open result
 " 'vnew', 'tabnew' etc..
@@ -78,7 +99,7 @@ If you want to configure js-beautify settings, you can check out [here](https://
 
 AUTHOR: alpaca-tc <alprhcp666@gmail.com>
 
-Last Modified: 2013-10-13
+Last Modified: 26 Oct 2013
 
 > License: MIT license
 > Permission is hereby granted, free of charge, to any person obtaining
