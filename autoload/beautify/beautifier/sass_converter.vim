@@ -69,7 +69,6 @@ function! s:source.available() "{{{
   if executable(g:beautify#beautifier#sass_convert#bin)
     return 1
   else
-    echomsg 'Please run "gem install sass"'
-    return 0
+    return 'gem install sass'
   endif
 endfunction"}}}

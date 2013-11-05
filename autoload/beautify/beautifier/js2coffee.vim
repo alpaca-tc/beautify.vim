@@ -22,7 +22,6 @@ function! s:source.available() "{{{
   if executable(g:beautify#beautifier#js2coffee#bin)
     return 1
   else
-    echomsg 'Please run "npm install -g js2coffee"'
-    return 0
+    return 'npm install -g js2coffee'
   endif
 endfunction"}}}

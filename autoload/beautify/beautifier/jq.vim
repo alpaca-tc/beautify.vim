@@ -20,7 +20,6 @@ function! s:source.available() "{{{
   if executable(g:beautify#beautifier#jq#bin)
     return 1
   else
-    return 0
-    echomsg 'Please run "npm install -g jq"'
+    return 'npm install -g jq'
   endif
 endfunction"}}}

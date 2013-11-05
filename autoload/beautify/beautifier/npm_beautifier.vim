@@ -46,7 +46,6 @@ function! s:default_source.available(...) "{{{
   if executable(g:beautify#beautifier#npm_beautifier#bin.javascript)
     return 1
   else
-    echomsg 'Please run "npm install -g js-beautify"'
-    return 0
+    return 'npm install -g js-beautify'
   endif
 endfunction"}}}

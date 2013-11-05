@@ -45,7 +45,6 @@ function! s:source.available() "{{{
   if executable(g:beautify#beautifier#html2haml#bin)
     return 1
   else
-    echomsg 'Please run "gem install html2haml"'
-    return 0
+    return 'gem install html2haml'
   endif
 endfunction"}}}
