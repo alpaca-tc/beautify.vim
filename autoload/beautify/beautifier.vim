@@ -1,3 +1,8 @@
+function! beautify#beautifier#get_all_sources() "{{{
+  call beautify#beautifier#define_sources()
+  return s:all_sources
+endfunction"}}}
+
 function! beautify#beautifier#get_sources(...) "{{{
   call beautify#beautifier#define_sources()
 
@@ -35,17 +40,22 @@ function! beautify#beautifier#define_sources() "{{{
 
   let beautifier = split(globpath(&runtimepath, 'autoload/beautify/beautifier/*.vim'), '\n')
   let source_file_names = map(beautifier, 'fnamemodify(v:val, ":t:r")')
-  let s:sources = []
+  let s:all_sources = []
 
   for source_name in source_file_names
     let source_list = beautify#utils#to_array(beautify#beautifier#{source_name}#define())
 
     for beautifier_source in source_list
       if !empty(beautifier_source)
-        call add(s:sources, s:fill_default_value(beautifier_source))
+        call add(s:all_sources, s:fill_default_value(beautifier_source))
       endif
     endfor
   endfor
+
+  let s:sources = filter(copy(s:all_sources), 'v:val.available() == 1')
+  if empty(s:sources)
+    call beautify#debug#check_available()
+  endif
 endfunction"}}}
 
 function! beautify#beautifier#update_sources() "{{{
