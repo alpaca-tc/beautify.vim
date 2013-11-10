@@ -1,5 +1,5 @@
 function! beautify#debug#check_available()
-  let sources = beautify#beautifier#get_sources()
+  let sources = beautify#beautifier#get_all_sources()
   let messages = []
 
   for source in sources
