@@ -12,7 +12,7 @@
 
 ### Reformatting
 
-This plug-in support js, json, css and html as reformatter. In the case of the buffer already set filetype, reformatter is selected automatically. Therefore, if you want result then, you have only to execute `:Beautify`.
+This plug-in support js, json, css and html as reformatter. In the case of the buffer already set filetype, reformatter is selected automatically. Therefore if you want a result then, you have only to execute `:Beautify`.
 
 - `html-beautify`
 - `css-beautify`
@@ -21,7 +21,7 @@ This plug-in support js, json, css and html as reformatter. In the case of the b
 
 ### Converting
 
-This plug-in support converting buffer to other syntax. If you want to convert buffer to haml from html, executing `:Beautify html2haml`.
+This plug-in support converting buffer to other syntax. If you want to convert a buffer to haml from html, executing `:Beautify html2haml`.
 
 - `html2haml`
 - `erb2haml`
@@ -87,7 +87,7 @@ If you want to configure js-beautify settings, you can check out [here](https://
 " 'vnew', 'tabnew' etc..
 " let g:beautify#default_outputter = 'current_buffer'
 
-" If you want to use new hash syntax of ruby19, you set 1 to the following variable.
+" If you want to use a new hash syntax of ruby19, you set the following variable to 1
 " let g:beautify#beautifier#html2haml#ruby19_attributes = 0
 ```
 
