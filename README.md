@@ -1,7 +1,7 @@
 # Beautify.vim
 
 - This little **beautifier** will reformat and reindent.
-- This **converter** will convert text selected to other syntax.
+- This **converter** will convert selected text to another format.
 
 ![DEMO]( assets/01.gif )
 ![DEMO]( assets/02.gif )
