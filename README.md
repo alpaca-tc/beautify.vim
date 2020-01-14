@@ -17,7 +17,8 @@ This plug-in support js, json, css and html as reformatter. In the case of the b
 - `html-beautify`
 - `css-beautify`
 - `js-beautify`
-- `jq`
+- [`jq`](https://github.com/stedolan/jq)
+- [`sqlformat`](https://github.com/andialbrecht/sqlparse)
 
 ### Converting
 
@@ -31,6 +32,7 @@ This plug-in support converting buffer to other syntax. If you want to convert a
 - `css2sass`
 - `scss2sass`
 - `sass2scss`
+- `sqlformat`
 
 ## How to install
 
@@ -56,13 +58,14 @@ Bundle 'alpaca-tc/beautify.vim'
 
 **Install js-beautify**
 
-`Beautify` depends on [npm](http://www.joyent.com/blog/installing-node-and-npm), jq, [js-beautify](https://npmjs.org/package/js-beautify) and [html2haml](https://github.com/haml/html2haml).
+`Beautify` depends on [npm](http://www.joyent.com/blog/installing-node-and-npm), [sqlparse](https://github.com/andialbrecht/sqlparse) jq, [js-beautify](https://npmjs.org/package/js-beautify) and [html2haml](https://github.com/haml/html2haml).
 You need to install them.
 
 - `npm install -g js-beautify`
 - `npm install -g jq`
 - `gem install html2haml --pre`
 - `gem install sass`
+- `pip install sqlparse`
 
 **Check installing**
 

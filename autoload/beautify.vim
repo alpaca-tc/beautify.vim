@@ -9,11 +9,8 @@ function! beautify#dispatch_beautify(...) range "{{{
   call beautify#beautifier#run(parsed_options.source_name, parsed_options)
 endfunction"}}}
 
-function! s:filter_sources(fargs) "{{{
-  let fargs = a:fargs
-  let source_name = get(fargs, 0, '')
-
-  let sources = beautify#beautifier#get_sources(source_name)
+function! s:filter_sources(source_name) "{{{
+  let sources = beautify#beautifier#get_sources(a:source_name)
   let filetype = get(split(&filetype, '\.'), 0, '')
 
   if !empty(sources)
@@ -35,11 +32,14 @@ function! s:parse_options(args) "{{{
         \ 'count' : a:args[0],
         \ 'startline' : a:args[1],
         \ 'endline' : a:args[2],
+        \ 'is_range' : (a:args[0] != -1)
         \ }
-  let options.is_range = (options.count == -1) ? 0 : 1
 
-  let fargs = a:args[3:]
-  let sources = s:filter_sources(fargs)
+  let all_args = split(get(a:args, 3, ''), '\s\+')
+  let source_name = get(all_args, 0, '')
+  let sources = s:filter_sources(source_name)
+  let options.args = all_args[1:]
+
   if empty(sources)
     echomsg 'Not found source of beautifier'
     return 0

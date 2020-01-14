@@ -32,7 +32,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 call beautify#variables#initialize()
-command! -complete=customlist,beautify#complete_options -nargs=? -range=% Beautify :call beautify#dispatch_beautify(<count>, <line1>, <line2>, <f-args>)
+command! -complete=customlist,beautify#complete_options -nargs=? -range=% Beautify :call beautify#dispatch_beautify(<count>, <line1>, <line2>, <q-args>)
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
